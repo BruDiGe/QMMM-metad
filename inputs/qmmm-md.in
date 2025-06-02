@@ -1,0 +1,53 @@
+EQUILIBRATION
+&cntrl
+ imin=0,           ! DEFAULT: Molecular Dynamics
+ ! Nature and format of the input
+ ntx=5,         ! Coordinates and velocities are read formatted, box info are read if ntb>0
+ irest=1,       ! Restart calculation (requires velocities in .rst input file)
+ ! Nature and format of the output
+ ntpr=15,      ! Steps for energy info in .out and .info
+ ntwr=15,    ! Steps for restart file (.rst)
+ ntwx=15,     ! Steps for coordinates file (.crd)
+ ntwe=15,    ! Steps for energy file (.en)
+ ! Potential function
+ ntf=2,         ! Bond interactions involving H-atoms omitted (to use with ntc=2)
+ ntb=2,         ! Periodic boundary conditions with constant pressure
+ cut=10.0,      ! Non Bounded cutoff in Angstrom (DEFAULT 8.0)
+ ! frozen on restrained atoms
+ ntr=0,         ! DEFAULT: No position restraint
+ ! Molecular dynamics
+ nstlim=10005, ! MD steps= 10ps
+ dt=0.001,      ! DEFAULT: Time step (QMMM=0.001, MD=0.002)
+ ! Temperature regulation
+ ntt=3,         ! Langevin dynamics thermostat
+ gamma_ln=1.0,  ! Collision frequency of Langevin dynamics
+ ig=71277,      ! DEFAULT: Seed for pseudo number generator: change it at each restart!
+ tempi=300.0,	! Initial temperature
+ temp0=300.0,   ! Reference temperature
+ ! Shake bond length constraints(only for MD)
+ ntc=2,         ! Bonds involving hydrogens are constrained
+ ! Pressure regulation
+ ntp=1,         ! Isotropic position scaling for constant pressure dynamics
+ pres0=1.0,     ! DEFAULT: Reference pressure (in atm)
+ taup=2.0       ! Pressure relaxation time (in ps)
+ ifqnt = 1,		! Flag for QM/MM run, active = 1
+ ! PLUMED commands
+ plumed=1, 	! Activate PLUMED
+ plumedfile="plumed.dat", !Name of PLUMED file
+/
+ &qmmm
+ qmmask = " : 1185-1186 | :1250,1249,1252,1253 " ! Add you atom mask
+ qmcut=9.0,		! Nonbonded cutoff in Angstroms used for QM/MM nonbonded interactions
+ qmcharge=1, 		! The net charge of the QM region
+ spin=1,		! Spin multiplicity of the QM region. Default is 1 (singlet). (integer)
+ qm_theory='EXTERN', 	! String that defines which level of QM theory to use.
+ writepdb=1,		! Write a PDB file of the selected QM region (NOT DEFAULT)
+ qmshake=0,		! Do not shake QM H atoms.
+ qmmm_int=1,		! QM-MM interactions in direct space are calculated (DEFAULT)
+ qm_ewald=0, 		! DO NOT Use Ewald sum to calculate long range QM-QM and QM-MM electrostatic interactions (DEFAULT)
+ qm_pme=1		! Use a QM compatible PME approach to calculate the long range QM-MM electrostatic energies  (DEFAULT)
+ lnk_method=1, adjust_q=2, qxd=.true
+/
+&orc
+  use_template=1
+/
