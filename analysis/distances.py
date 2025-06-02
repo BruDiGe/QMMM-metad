@@ -112,6 +112,6 @@ plt.xlabel('Reaction Coordinate')
 #plt.title('Wildtype')
 #plt.legend()
 #plt.show()
-plt.savefig('distances-wildtype.png')
+plt.savefig('distances.png')
 
 
